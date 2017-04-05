@@ -1,0 +1,326 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/benmonro/android"
+
+    >android (v0.0.8)</a>
+</h1>
+<h4>various android utils & commands for node</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.android">module android</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.android.firstDevice">
+            function <span class="apidocSignatureSpan">android.</span>firstDevice
+            <span class="apidocSignatureSpan">(callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.android.install">
+            function <span class="apidocSignatureSpan">android.</span>install
+            <span class="apidocSignatureSpan">(pathToApk, completedCallback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.android.isInstalled">
+            function <span class="apidocSignatureSpan">android.</span>isInstalled
+            <span class="apidocSignatureSpan">(pattern, isInstalledCallback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.android.push">
+            function <span class="apidocSignatureSpan">android.</span>push
+            <span class="apidocSignatureSpan">(from, to, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.android.sendBroadcast">
+            function <span class="apidocSignatureSpan">android.</span>sendBroadcast
+            <span class="apidocSignatureSpan">(options, callback)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.android" id="apidoc.module.android">module android</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.android.firstDevice" id="apidoc.element.android.firstDevice">
+        function <span class="apidocSignatureSpan">android.</span>firstDevice
+        <span class="apidocSignatureSpan">(callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">firstDevice = function (callback) {
+    adbDevices = exec(&#x22;adb devices&#x22;, function (error, stdout, stderr) {
+
+        var findDeviceId = /\n([\d\w\.\:]+)\s+/m;
+        var match = findDeviceId.exec(stdout);
+
+        console.log(&#x22;adb devices:\n&#x22; + stdout);
+
+        if (match != null) {
+            console.log(&#x22;found a device&#x22;);
+            callback(match[1]);
+        } else {
+            callback();
+        }
+    });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+```javascript
+var adb = require(&#x22;android&#x22;);
+```
+
+Get attached device id
+----------------------
+```javascript
+adb.<span class="apidocCodeKeywordSpan">firstDevice</span>(function(deviceId){
+	if(deviceId) {
+		//there&#x27;s a device attached, do cool stuff
+	} else {
+		//no device attached
+	}
+});
+```
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.android.install" id="apidoc.element.android.install">
+        function <span class="apidocSignatureSpan">android.</span>install
+        <span class="apidocSignatureSpan">(pathToApk, completedCallback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">install = function (pathToApk, completedCallback) {
+
+
+    sys.print(&#x22;installing &#x22; + pathToApk);
+    var install = &#x22;adb install &#x22; + pathToApk;
+
+    exec(install, function (err, stdout, stderr) {
+        sys.print(&#x22;result of &#x22; + install + &#x22;: &#x22; + stdout);
+
+        completedCallback();
+    });
+
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+});
+```
+
+Installing an APK
+-----------------
+
+```javascript
+adb.<span class="apidocCodeKeywordSpan">install</span>(&#x22;/path/to/my.apk&#x22;, function() {
+	//do cool stuff
+});
+```
+
+Pushing a file
+--------------
+```javascript
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.android.isInstalled" id="apidoc.element.android.isInstalled">
+        function <span class="apidocSignatureSpan">android.</span>isInstalled
+        <span class="apidocSignatureSpan">(pattern, isInstalledCallback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">isInstalled = function (pattern, isInstalledCallback) {
+
+    var isInstalledCommand = &#x22;adb shell pm list packages| grep package:&#x22; + pattern;
+    console.log(isInstalledCommand);
+    exec(isInstalledCommand, function (err, stdout, stderr) {
+        console.log(&#x22;result:\n&#x22; + stdout);
+
+        isInstalledCallback(stdout.indexOf(pattern) &#x3e;= 0);
+    });
+
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+	}
+});
+```
+
+Checking to see if a package is installed (wildcards allowed)
+-------------------------------------------------------------
+```javascript
+adb.<span class="apidocCodeKeywordSpan">isInstalled</span>(&#x22;com.example.*&#x22;, function(isInstalled) {
+	if(isInstalled) {
+		//do cool stuff
+	}
+});
+```
+
+Installing an APK
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.android.push" id="apidoc.element.android.push">
+        function <span class="apidocSignatureSpan">android.</span>push
+        <span class="apidocSignatureSpan">(from, to, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">push = function (from, to, callback) {
+    exec(&#x22;adb push &#x22; + from + &#x22; &#x22; + to, function(error, stdout, stderr){
+        callback(error);
+    });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+	//do cool stuff
+});
+```
+
+Pushing a file
+--------------
+```javascript
+adb.<span class="apidocCodeKeywordSpan">push</span>(&#x22;/path/to/src&#x22;, &#x22;/path/to/target&#x22;, function (err) {
+	if(!err) {
+		//do cool stuff
+	}
+});
+```
+
+Sending a broadcast
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.android.sendBroadcast" id="apidoc.element.android.sendBroadcast">
+        function <span class="apidocSignatureSpan">android.</span>sendBroadcast
+        <span class="apidocSignatureSpan">(options, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">sendBroadcast = function (options, callback) {
+    var extras = &#x22;&#x22;;
+
+    for (key in options.extras) {
+        extras += &#x22; -e \&#x22;&#x22; + key + &#x22;\&#x22; &#x22; + options.extras[key];
+    }
+
+    var broadcastCmd = &#x22;adb shell am broadcast -a \&#x22;&#x22; + options.action + &#x22;\&#x22;&#x22; + extras;
+    console.log(&#x22;sending command: &#x22; + broadcastCmd);
+    exec(broadcastCmd, function (error, stdout, stderr) {
+
+            var dataMatch = (/data=&#x22;(\{.*\})&#x22;/m).exec(stdout);
+            var response = {};
+            if (dataMatch) {
+                response.data = dataMatch[1];
+                response.message = stdout;
+            }
+            callback(response);
+        }
+    );
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+```
+
+Sending a broadcast
+-------------------
+```javascript
+var options = {action:&#x22;com.example.ACTION_JACKSON&#x22;, extras:{key:&#x22;lime&#x22;, pie: &#x22;good&#x22;};
+
+adb.<span class="apidocCodeKeywordSpan">sendBroadcast</span>(options, function(response){
+	console.log(&#x22;response data: &#x22; + response.data);
+	console.log(&#x22;response message: &#x22; + response.message);
+});
+```
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
