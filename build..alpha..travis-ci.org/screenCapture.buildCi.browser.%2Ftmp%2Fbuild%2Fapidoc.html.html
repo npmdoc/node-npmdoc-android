@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/benmonro/android"
-
-    >android (v0.0.8)</a>
+    <a href="https://github.com/benmonro/android">android (v0.0.8)</a>
 </h1>
-<h4>various android utils & commands for node</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<h4>various android utils &amp; commands for node</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.android">module android</a><ol>
 
@@ -187,15 +180,15 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">firstDevice = function (callback) {
-    adbDevices = exec(&#x22;adb devices&#x22;, function (error, stdout, stderr) {
+    adbDevices = exec("adb devices", function (error, stdout, stderr) {
 
         var findDeviceId = /\n([\d\w\.\:]+)\s+/m;
         var match = findDeviceId.exec(stdout);
 
-        console.log(&#x22;adb devices:\n&#x22; + stdout);
+        console.log("adb devices:\n" + stdout);
 
         if (match != null) {
-            console.log(&#x22;found a device&#x22;);
+            console.log("found a device");
             callback(match[1]);
         } else {
             callback();
@@ -204,7 +197,7 @@
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 ```javascript
-var adb = require(&#x22;android&#x22;);
+var adb = require("android");
 ```
 
 Get attached device id
@@ -212,7 +205,7 @@ Get attached device id
 ```javascript
 adb.<span class="apidocCodeKeywordSpan">firstDevice</span>(function(deviceId){
 	if(deviceId) {
-		//there&#x27;s a device attached, do cool stuff
+		//there's a device attached, do cool stuff
 	} else {
 		//no device attached
 	}
@@ -233,11 +226,11 @@ adb.<span class="apidocCodeKeywordSpan">firstDevice</span>(function(deviceId){
     <li>description and source-code<pre class="apidocCodePre">install = function (pathToApk, completedCallback) {
 
 
-    sys.print(&#x22;installing &#x22; + pathToApk);
-    var install = &#x22;adb install &#x22; + pathToApk;
+    sys.print("installing " + pathToApk);
+    var install = "adb install " + pathToApk;
 
     exec(install, function (err, stdout, stderr) {
-        sys.print(&#x22;result of &#x22; + install + &#x22;: &#x22; + stdout);
+        sys.print("result of " + install + ": " + stdout);
 
         completedCallback();
     });
@@ -251,7 +244,7 @@ Installing an APK
 -----------------
 
 ```javascript
-adb.<span class="apidocCodeKeywordSpan">install</span>(&#x22;/path/to/my.apk&#x22;, function() {
+adb.<span class="apidocCodeKeywordSpan">install</span>("/path/to/my.apk", function() {
 	//do cool stuff
 });
 ```
@@ -273,12 +266,12 @@ Pushing a file
     <ul>
     <li>description and source-code<pre class="apidocCodePre">isInstalled = function (pattern, isInstalledCallback) {
 
-    var isInstalledCommand = &#x22;adb shell pm list packages| grep package:&#x22; + pattern;
+    var isInstalledCommand = "adb shell pm list packages| grep package:" + pattern;
     console.log(isInstalledCommand);
     exec(isInstalledCommand, function (err, stdout, stderr) {
-        console.log(&#x22;result:\n&#x22; + stdout);
+        console.log("result:\n" + stdout);
 
-        isInstalledCallback(stdout.indexOf(pattern) &#x3e;= 0);
+        isInstalledCallback(stdout.indexOf(pattern) &gt;= 0);
     });
 
 }</pre></li>
@@ -290,7 +283,7 @@ Pushing a file
 Checking to see if a package is installed (wildcards allowed)
 -------------------------------------------------------------
 ```javascript
-adb.<span class="apidocCodeKeywordSpan">isInstalled</span>(&#x22;com.example.*&#x22;, function(isInstalled) {
+adb.<span class="apidocCodeKeywordSpan">isInstalled</span>("com.example.*", function(isInstalled) {
 	if(isInstalled) {
 		//do cool stuff
 	}
@@ -311,7 +304,7 @@ Installing an APK
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">push = function (from, to, callback) {
-    exec(&#x22;adb push &#x22; + from + &#x22; &#x22; + to, function(error, stdout, stderr){
+    exec("adb push " + from + " " + to, function(error, stdout, stderr){
         callback(error);
     });
 }</pre></li>
@@ -323,7 +316,7 @@ Installing an APK
 Pushing a file
 --------------
 ```javascript
-adb.<span class="apidocCodeKeywordSpan">push</span>(&#x22;/path/to/src&#x22;, &#x22;/path/to/target&#x22;, function (err) {
+adb.<span class="apidocCodeKeywordSpan">push</span>("/path/to/src", "/path/to/target", function (err) {
 	if(!err) {
 		//do cool stuff
 	}
@@ -344,17 +337,17 @@ Sending a broadcast
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">sendBroadcast = function (options, callback) {
-    var extras = &#x22;&#x22;;
+    var extras = "";
 
     for (key in options.extras) {
-        extras += &#x22; -e \&#x22;&#x22; + key + &#x22;\&#x22; &#x22; + options.extras[key];
+        extras += " -e \"" + key + "\" " + options.extras[key];
     }
 
-    var broadcastCmd = &#x22;adb shell am broadcast -a \&#x22;&#x22; + options.action + &#x22;\&#x22;&#x22; + extras;
-    console.log(&#x22;sending command: &#x22; + broadcastCmd);
+    var broadcastCmd = "adb shell am broadcast -a \"" + options.action + "\"" + extras;
+    console.log("sending command: " + broadcastCmd);
     exec(broadcastCmd, function (error, stdout, stderr) {
 
-            var dataMatch = (/data=&#x22;(\{.*\})&#x22;/m).exec(stdout);
+            var dataMatch = (/data="(\{.*\})"/m).exec(stdout);
             var response = {};
             if (dataMatch) {
                 response.data = dataMatch[1];
@@ -370,11 +363,11 @@ Sending a broadcast
 Sending a broadcast
 -------------------
 ```javascript
-var options = {action:&#x22;com.example.ACTION_JACKSON&#x22;, extras:{key:&#x22;lime&#x22;, pie: &#x22;good&#x22;};
+var options = {action:"com.example.ACTION_JACKSON", extras:{key:"lime", pie: "good"};
 
 adb.<span class="apidocCodeKeywordSpan">sendBroadcast</span>(options, function(response){
-	console.log(&#x22;response data: &#x22; + response.data);
-	console.log(&#x22;response message: &#x22; + response.message);
+	console.log("response data: " + response.data);
+	console.log("response message: " + response.message);
 });
 ```
 ...</pre></li>
@@ -395,15 +388,15 @@ adb.<span class="apidocCodeKeywordSpan">sendBroadcast</span>(options, function(r
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">firstDevice = function (callback) {
-    adbDevices = exec(&#x22;adb devices&#x22;, function (error, stdout, stderr) {
+    adbDevices = exec("adb devices", function (error, stdout, stderr) {
 
         var findDeviceId = /\n([\d\w\.\:]+)\s+/m;
         var match = findDeviceId.exec(stdout);
 
-        console.log(&#x22;adb devices:\n&#x22; + stdout);
+        console.log("adb devices:\n" + stdout);
 
         if (match != null) {
-            console.log(&#x22;found a device&#x22;);
+            console.log("found a device");
             callback(match[1]);
         } else {
             callback();
@@ -412,7 +405,7 @@ adb.<span class="apidocCodeKeywordSpan">sendBroadcast</span>(options, function(r
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 ```javascript
-var adb = require(&#x22;android&#x22;);
+var adb = require("android");
 ```
 
 Get attached device id
@@ -420,7 +413,7 @@ Get attached device id
 ```javascript
 adb.<span class="apidocCodeKeywordSpan">firstDevice</span>(function(deviceId){
 	if(deviceId) {
-		//there&#x27;s a device attached, do cool stuff
+		//there's a device attached, do cool stuff
 	} else {
 		//no device attached
 	}
@@ -446,11 +439,11 @@ adb.<span class="apidocCodeKeywordSpan">firstDevice</span>(function(deviceId){
     <li>description and source-code<pre class="apidocCodePre">install = function (pathToApk, completedCallback) {
 
 
-    sys.print(&#x22;installing &#x22; + pathToApk);
-    var install = &#x22;adb install &#x22; + pathToApk;
+    sys.print("installing " + pathToApk);
+    var install = "adb install " + pathToApk;
 
     exec(install, function (err, stdout, stderr) {
-        sys.print(&#x22;result of &#x22; + install + &#x22;: &#x22; + stdout);
+        sys.print("result of " + install + ": " + stdout);
 
         completedCallback();
     });
@@ -464,7 +457,7 @@ Installing an APK
 -----------------
 
 ```javascript
-adb.<span class="apidocCodeKeywordSpan">install</span>(&#x22;/path/to/my.apk&#x22;, function() {
+adb.<span class="apidocCodeKeywordSpan">install</span>("/path/to/my.apk", function() {
 	//do cool stuff
 });
 ```
@@ -491,12 +484,12 @@ Pushing a file
     <ul>
     <li>description and source-code<pre class="apidocCodePre">isInstalled = function (pattern, isInstalledCallback) {
 
-    var isInstalledCommand = &#x22;adb shell pm list packages| grep package:&#x22; + pattern;
+    var isInstalledCommand = "adb shell pm list packages| grep package:" + pattern;
     console.log(isInstalledCommand);
     exec(isInstalledCommand, function (err, stdout, stderr) {
-        console.log(&#x22;result:\n&#x22; + stdout);
+        console.log("result:\n" + stdout);
 
-        isInstalledCallback(stdout.indexOf(pattern) &#x3e;= 0);
+        isInstalledCallback(stdout.indexOf(pattern) &gt;= 0);
     });
 
 }</pre></li>
@@ -508,7 +501,7 @@ Pushing a file
 Checking to see if a package is installed (wildcards allowed)
 -------------------------------------------------------------
 ```javascript
-adb.<span class="apidocCodeKeywordSpan">isInstalled</span>(&#x22;com.example.*&#x22;, function(isInstalled) {
+adb.<span class="apidocCodeKeywordSpan">isInstalled</span>("com.example.*", function(isInstalled) {
 	if(isInstalled) {
 		//do cool stuff
 	}
@@ -534,7 +527,7 @@ Installing an APK
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">push = function (from, to, callback) {
-    exec(&#x22;adb push &#x22; + from + &#x22; &#x22; + to, function(error, stdout, stderr){
+    exec("adb push " + from + " " + to, function(error, stdout, stderr){
         callback(error);
     });
 }</pre></li>
@@ -546,7 +539,7 @@ Installing an APK
 Pushing a file
 --------------
 ```javascript
-adb.<span class="apidocCodeKeywordSpan">push</span>(&#x22;/path/to/src&#x22;, &#x22;/path/to/target&#x22;, function (err) {
+adb.<span class="apidocCodeKeywordSpan">push</span>("/path/to/src", "/path/to/target", function (err) {
 	if(!err) {
 		//do cool stuff
 	}
@@ -572,17 +565,17 @@ Sending a broadcast
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">sendBroadcast = function (options, callback) {
-    var extras = &#x22;&#x22;;
+    var extras = "";
 
     for (key in options.extras) {
-        extras += &#x22; -e \&#x22;&#x22; + key + &#x22;\&#x22; &#x22; + options.extras[key];
+        extras += " -e \"" + key + "\" " + options.extras[key];
     }
 
-    var broadcastCmd = &#x22;adb shell am broadcast -a \&#x22;&#x22; + options.action + &#x22;\&#x22;&#x22; + extras;
-    console.log(&#x22;sending command: &#x22; + broadcastCmd);
+    var broadcastCmd = "adb shell am broadcast -a \"" + options.action + "\"" + extras;
+    console.log("sending command: " + broadcastCmd);
     exec(broadcastCmd, function (error, stdout, stderr) {
 
-            var dataMatch = (/data=&#x22;(\{.*\})&#x22;/m).exec(stdout);
+            var dataMatch = (/data="(\{.*\})"/m).exec(stdout);
             var response = {};
             if (dataMatch) {
                 response.data = dataMatch[1];
@@ -598,11 +591,11 @@ Sending a broadcast
 Sending a broadcast
 -------------------
 ```javascript
-var options = {action:&#x22;com.example.ACTION_JACKSON&#x22;, extras:{key:&#x22;lime&#x22;, pie: &#x22;good&#x22;};
+var options = {action:"com.example.ACTION_JACKSON", extras:{key:"lime", pie: "good"};
 
 adb.<span class="apidocCodeKeywordSpan">sendBroadcast</span>(options, function(response){
-	console.log(&#x22;response data: &#x22; + response.data);
-	console.log(&#x22;response message: &#x22; + response.message);
+	console.log("response data: " + response.data);
+	console.log("response message: " + response.message);
 });
 ```
 ...</pre></li>
@@ -617,3 +610,4 @@ adb.<span class="apidocCodeKeywordSpan">sendBroadcast</span>(options, function(r
     ]
 </div>
 </div>
+</body></html>
