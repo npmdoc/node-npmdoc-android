@@ -1,6 +1,6 @@
 # npmdoc-android
 
-#### api documentation for  [android (v0.0.8)](https://github.com/benmonro/android)  [![npm package](https://img.shields.io/npm/v/npmdoc-android.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-android) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-android.svg)](https://travis-ci.org/npmdoc/node-npmdoc-android)
+#### basic api documentation for  [android (v0.0.8)](https://github.com/benmonro/android)  [![npm package](https://img.shields.io/npm/v/npmdoc-android.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-android) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-android.svg)](https://travis-ci.org/npmdoc/node-npmdoc-android)
 
 #### various android utils & commands for node
 
@@ -57,7 +57,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "version": "0.0.8"
+    "version": "0.0.8",
+    "bin": {}
 }
 ```
 
